@@ -1,0 +1,21 @@
+{% extends 'incidents/base.html' %}
+
+{% block content %}
+
+<a class="btn" href="{% url 'create' %}">+ Create Incident</a>
+<hr>
+
+{% for incident in incidents %}
+<div class="card">
+    <h3>{{ incident.title }}</h3>
+    <p>{{ incident.description }}</p>
+    <p><strong>Severity:</strong> {{ incident.severity }}</p>
+
+    <a class="btn" href="{% url 'update' incident.id %}">Edit</a>
+    <a class="btn" href="{% url 'delete' incident.id %}">Delete</a>
+</div>
+{% empty %}
+<p>No incidents reported yet.</p>
+{% endfor %}
+
+{% endblock %}
