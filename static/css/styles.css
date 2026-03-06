@@ -1,4 +1,3 @@
-<style>
 input[type="text"], textarea, select {
     width: 100%;
     padding: 8px;
@@ -11,4 +10,3 @@ input[type="text"], textarea, select {
 textarea {
     resize: vertical;
 }
-</style>
