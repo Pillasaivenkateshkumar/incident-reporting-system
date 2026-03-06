@@ -2,18 +2,59 @@
 
 {% block content %}
 
+<h2>Incident Dashboard</h2>
+
+<div style="margin-bottom:20px;">
+
+<p><strong>Total Incidents:</strong> {{ total_incidents }}</p>
+
+<p style="color:green;">
+<strong>New:</strong> {{ new_incidents }}
+</p>
+
+<p style="color:orange;">
+<strong>In Progress:</strong> {{ inprogress_incidents }}
+</p>
+
+<p style="color:red;">
+<strong>Resolved:</strong> {{ resolved_incidents }}
+</p>
+
+</div>
+
 <a class="btn" href="{% url 'create' %}">+ Create Incident</a>
+
 <hr>
 
 {% for incident in incidents %}
 <div class="card">
+
     <h3>{{ incident.title }}</h3>
+
     <p>{{ incident.description }}</p>
+
     <p><strong>Severity:</strong> {{ incident.severity }}</p>
+
+    <p>
+        <strong>Status:</strong>
+
+        {% if incident.status == "New" %}
+            <span style="color:green;font-weight:bold;">New</span>
+
+        {% elif incident.status == "InProgress" %}
+            <span style="color:orange;font-weight:bold;">In Progress</span>
+
+        {% elif incident.status == "Resolved" %}
+            <span style="color:red;font-weight:bold;">Resolved</span>
+        {% endif %}
+
+    </p>
 
     <a class="btn" href="{% url 'update' incident.id %}">Edit</a>
     <a class="btn" href="{% url 'delete' incident.id %}">Delete</a>
+
 </div>
+
 {% empty %}
 <p>No incidents reported yet.</p>
 {% endfor %}

@@ -1,31 +1,21 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render
 from .models import Incident
-from .forms import IncidentForm
 
-# READ
 def index(request):
+
     incidents = Incident.objects.all()
-    return render(request, 'incidents/index.html', {'incidents': incidents})
 
-# CREATE
-def create_incident(request):
-    form = IncidentForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect('index')
-    return render(request, 'incidents/create.html', {'form': form})
+    total_incidents = incidents.count()
+    new_incidents = incidents.filter(status="New").count()
+    inprogress_incidents = incidents.filter(status="InProgress").count()
+    resolved_incidents = incidents.filter(status="Resolved").count()
 
-# UPDATE
-def update_incident(request, pk):
-    incident = get_object_or_404(Incident, pk=pk)
-    form = IncidentForm(request.POST or None, instance=incident)
-    if form.is_valid():
-        form.save()
-        return redirect('index')
-    return render(request, 'incidents/update.html', {'form': form})
+    context = {
+        "incidents": incidents,
+        "total_incidents": total_incidents,
+        "new_incidents": new_incidents,
+        "inprogress_incidents": inprogress_incidents,
+        "resolved_incidents": resolved_incidents,
+    }
 
-# DELETE
-def delete_incident(request, pk):
-    incident = get_object_or_404(Incident, pk=pk)
-    incident.delete()
-    return redirect('index')
+    return render(request, "incidents/index.html", context)

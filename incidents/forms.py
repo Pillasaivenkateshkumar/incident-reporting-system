@@ -4,7 +4,7 @@ from .models import Incident
 class IncidentForm(forms.ModelForm):
     class Meta:
         model = Incident
-        fields = ['title', 'description', 'severity']
+        fields = ['title', 'description', 'location', 'status']
 
     def clean_description(self):
         description = self.cleaned_data.get('description')
