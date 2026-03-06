@@ -1,0 +1,14 @@
+{% extends 'incidents/base.html' %}
+
+{% block content %}
+<div class="card">
+    <h2>Delete Incident</h2>
+    <p>Are you sure you want to delete "<strong>{{ incident.title }}</strong>"?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn" type="submit" style="background-color:red;">Delete</button>
+        <a class="btn" href="{% url 'index' %}">Cancel</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,16 +1,90 @@
-{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Incident Reporting System</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;  /* light gray background */
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4a90e2; /* blue header */
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 10px;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            text-decoration: none;
+            background-color: #4a90e2;
+            color: white;
+            border-radius: 5px;
+            margin: 5px;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #357ABD;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .status-new {
+            color: green;
+            font-weight: bold;
+        }
+
+        .status-inprogress {
+            color: orange;
+            font-weight: bold;
+        }
+
+        .status-resolved {
+            color: red;
+            font-weight: bold;
+        }
+
+        .counters {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .counter-box {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            width: 150px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+    </style>
 </head>
 <body>
-
-<div class="container">
-    <h1>Incident Reporting System</h1>
-    {% block content %}{% endblock %}
-</div>
-
+    <header>
+        <h1>Incident Reporting System</h1>
+    </header>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
 </body>
 </html>
