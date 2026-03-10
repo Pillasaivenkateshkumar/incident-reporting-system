@@ -1,0 +1,38 @@
+name: Deploy Django to EC2
+
+# Trigger workflow on push to main branch
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout code from GitHub
+      - uses: actions/checkout@v3
+
+      # Step 2: Load your SSH key from GitHub Secrets
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.1
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+      # Step 3: Copy project files to EC2
+      - name: Sync project to EC2
+        run: |
+          rsync -avz --exclude '.git/' ./ ec2-user@${{ secrets.EC2_IP }}:/home/ec2-user/incident-reporting-system/
+
+      # Step 4: SSH into EC2 and update app
+      - name: SSH commands to update app
+        run: |
+          ssh ec2-user@${{ secrets.EC2_IP }} "
+          cd /home/ec2-user/incident-reporting-system
+          source venv/bin/activate
+          pip install -r requirements.txt
+          python manage.py migrate
+          sudo systemctl restart incident_project
+          sudo systemctl restart nginx
+          "
